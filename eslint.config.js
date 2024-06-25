@@ -33,7 +33,7 @@ export default [
       'no-undef': 'error',
     }
   },
-  // TS
+  /** TS */
   {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
