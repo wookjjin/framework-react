@@ -12,7 +12,7 @@ const App = () => {
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          <h3><em>React Framework</em></h3>
         </p>
       </div>
       <p className="read-the-docs">
