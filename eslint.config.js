@@ -2,20 +2,26 @@ import eslint from "@eslint/js";
 import tsEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
-import hooksPlugin from 'eslint-plugin-react-hooks';
+import reactHooks from 'eslint-plugin-react-hooks';
+import functional from 'eslint-plugin-functional';
+import esImport from 'eslint-plugin-import';
 
 export default [
   {
+    browser: true,
+    node: true,
+  },
+  {
+    files: ["**/*.{ts,tsx}"],
     plugins: {
-      'react-hooks': hooksPlugin,
-      'react': react,
+      functional,
+      'import': esImport,
       '@typescript-eslint': tsEslint,
     },
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: 'ESNext',
-        sourceType: 'module',
         ecmaFeatures: {
           jsx: true,
         },
@@ -23,30 +29,35 @@ export default [
     },
     rules: {
       // 필요에 따라 여기에 규칙을 추가하세요.
-    }
-  },
-  // JS
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    rules: {
+      ...tsEslint.configs.recommended.rules,
       ...eslint.configs.recommended.rules,
+      '@typescript-eslint/no-unused-vars': 'error',
       'no-undef': 'error',
     }
   },
-  /** TS */
+  /** React */
   {
-    files: ['**/*.ts', '**/*.tsx'],
-    rules: {
-      ...tsEslint.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': 'error',
-    }
-  },
-  // React
-  {
-    files: ['**/*.js', '**/*.jsx'],
+    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
+    plugins: {
+      'react': react,
+    },
     rules: {
       'react/prop-types': 'off',
-    }
+      ...react.configs['jsx-runtime'].rules,
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+  /** React Hooks */
+  {
+    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
+    plugins: {
+      'react-hooks': reactHooks,
+    },
+    rules: reactHooks.configs.recommended.rules,
   },
   {
     ignores: ['dist', 'eslint.config.js']
