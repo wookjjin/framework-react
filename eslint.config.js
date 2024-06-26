@@ -5,12 +5,9 @@ import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import functional from 'eslint-plugin-functional';
 import esImport from 'eslint-plugin-import';
+import globals from "globals";
 
 export default [
-  {
-    browser: true,
-    node: true,
-  },
   {
     files: ["**/*.{ts,tsx}"],
     plugins: {
@@ -25,6 +22,9 @@ export default [
         ecmaFeatures: {
           jsx: true,
         },
+      },
+      globals: {
+        ...globals.browser,
       }
     },
     rules: {
@@ -33,7 +33,9 @@ export default [
       ...eslint.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': 'error',
       'no-undef': 'error',
-    }
+      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
+      'quotes': ["error", "single"]
+    },
   },
   /** React */
   {
