@@ -1,10 +1,27 @@
-import Router from './routes/router'
-import './App.css'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import DefaultLayout from '~/layouts/default'
+import ErrorPage from '~/pages/error-page'
+import About from '~/pages/about'
 
-const App = () => {
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <DefaultLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'about',
+        element: <About />
+      }
+    ]
+  },
+])
+
+const App: React.FC = () => {
+
   return (
     <>
-      <Router />
+      <RouterProvider router={router} />
     </>
   )
 }

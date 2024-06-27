@@ -1,15 +1,15 @@
-import eslint from "@eslint/js";
-import tsEslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
-import functional from 'eslint-plugin-functional';
-import esImport from 'eslint-plugin-import';
-import globals from "globals";
+import eslint from '@eslint/js'
+import tsEslint from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
+import react from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
+import functional from 'eslint-plugin-functional'
+import esImport from 'eslint-plugin-import'
+import globals from 'globals'
 
 export default [
   {
-    files: ["**/*.{ts,tsx}"],
+    files: ['**/*.{ts,tsx}'],
     plugins: {
       functional,
       'import': esImport,
@@ -25,7 +25,8 @@ export default [
       },
       globals: {
         ...globals.browser,
-      }
+        ...globals.node,
+      },
     },
     rules: {
       // 필요에 따라 여기에 규칙을 추가하세요.
@@ -34,14 +35,16 @@ export default [
       '@typescript-eslint/no-unused-vars': 'error',
       'no-undef': 'error',
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
-      'quotes': ["error", "single"]
+      'quotes': ['error', 'single'],
+      'indent': ['error', 2],
+      'semi': ['error', 'never']
     },
   },
   /** React */
   {
-    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
+    files: ['**/*.{ts,tsx}'],
     plugins: {
-      'react': react,
+      react,
     },
     rules: {
       'react/prop-types': 'off',
@@ -55,13 +58,13 @@ export default [
   },
   /** React Hooks */
   {
-    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
+    files: ['**/*.{ts,tsx}'],
     plugins: {
       'react-hooks': reactHooks,
     },
     rules: reactHooks.configs.recommended.rules,
   },
   {
-    ignores: ['dist', 'eslint.config.js']
+    ignores: ['dist', 'eslint.config.js'],
   },
-];
+]
