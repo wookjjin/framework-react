@@ -1,3 +1,4 @@
+import React from 'react'
 import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -10,7 +11,7 @@ const Container = styled.div`
   height: 100vh;
 `
 
-export default function ErrorPage() {
+const ErrorPage:React.FC =() =>{
   const error = useRouteError()
 
   if (isRouteErrorResponse(error)) {
@@ -43,6 +44,8 @@ export default function ErrorPage() {
       </Container>
     )
   } else {
-    return <></>
+    return (<></>)
   }
 }
+
+export default ErrorPage

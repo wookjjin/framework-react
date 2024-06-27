@@ -37,7 +37,34 @@ export default [
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
       'quotes': ['error', 'single'],
       'indent': ['error', 2],
-      'semi': ['error', 'never']
+      'semi': ['error', 'never'],
+      'import/order': [
+        'error',
+        {
+          'groups': ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'object', 'type', 'unknown'],
+          'pathGroups': [
+            {
+              'pattern': 'react',
+              'group': 'builtin',
+              'position': 'before'
+            },
+            {
+              'pattern': '@/core/**',
+              'group': 'unknown'
+            },
+            {
+              'pattern': '**/*.css.ts',
+              'group': 'unknown',
+              'position': 'after'
+            },
+          ],
+          'newlines-between': 'always',
+          'alphabetize': {
+            'order': 'asc',
+            'caseInsensitive': true
+          }
+        }
+      ],
     },
   },
   /** React */

@@ -1,7 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import DefaultLayout from '~/layouts/default'
-import ErrorPage from '~/pages/error-page'
 import About from '~/pages/about'
+import ErrorPage from '~/pages/error-page'
+import React from 'react'
 
 const router = createBrowserRouter([
   {
