@@ -50,7 +50,7 @@ const Content = styled.main`
   overflow-y: auto;
 `
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -59,16 +59,17 @@ const Container = styled.div`
 const DefaultLayout = () => {
 
   return (
-    <Container>
+    <Wrapper>
       <Header>
         <HeaderNav>
           <StyledLink to="/">Home</StyledLink>
           <StyledLink to="/about">About</StyledLink>
+          <StyledLink to="/kanban">Kanban</StyledLink>
         </HeaderNav>
       </Header>
       <Sidebar>Sidebar</Sidebar>
       <Content><Outlet /></Content>
-    </Container>
+    </Wrapper>
   )
 }
 

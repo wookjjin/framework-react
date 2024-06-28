@@ -49,6 +49,16 @@ export default [
               'position': 'before'
             },
             {
+              'pattern': 'react-router-dom',
+              'group': 'builtin',
+              'position': 'after',
+            },
+            {
+              'pattern': 'styled-components',
+              'group': 'external',
+              'position': 'after',
+            },
+            {
               'pattern': '@/core/**',
               'group': 'unknown'
             },
@@ -58,6 +68,7 @@ export default [
               'position': 'after'
             },
           ],
+          'pathGroupsExcludedImportTypes': ['builtin', 'external'],
           'newlines-between': 'always',
           'alphabetize': {
             'order': 'asc',
