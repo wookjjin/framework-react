@@ -17,12 +17,12 @@ const Title = styled.h3`
   padding: 8px;
 `
 
-const TaskList = styled.div`
+const TaskList = styled.div<{ $isDraggingOver: boolean }>`
   padding: 8px;
   transition: background-color 0.2s ease;
-  background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
-  flex-grow: 1;
-  min-height: 100px;
+  background-color: ${props => (props.$isDraggingOver ? 'skyblue' : 'white')};
+  /* flex-grow: 1;
+  min-height: 100px; */
 `
 
 const Column = ({column, tasks}: IColumnProps) => {
@@ -30,8 +30,12 @@ const Column = ({column, tasks}: IColumnProps) => {
     <Container>
       <Title>{column.title}</Title>
       <Droppable droppableId={column.id}>
-        {(provided) => (
-          <TaskList {...provided.droppableProps} ref={provided.innerRef}>
+        {(provided, snapshot) => (
+          <TaskList
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            $isDraggingOver={snapshot.isDraggingOver}
+          >
             <>
               {tasks.map((task, idx) => (
                 <Task key={task.id} index={idx} task={task} />

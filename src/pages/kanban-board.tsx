@@ -18,12 +18,29 @@ const KanbanBoard: React.FC = () => {
 
       if (!destination) return
 
-      if (destination.droppableId === source.droppableId && destination.index === source.index) return
+      if (destination.droppableId === source.droppableId &&
+        destination.index === source.index) return
 
       const column = data.columns[source.droppableId]
-      console.log('column', column)
+      const newTaskIds = Array.from(column.taskIds)
+      newTaskIds.splice(source.index, 1)
+      newTaskIds.splice(destination.index, 0, draggableId)
+
+      const newColumn = {
+        ...column,
+        taskIds: newTaskIds
+      }
+
+      const newData = {
+        ...data,
+        columns: {
+          ...data.columns,
+          [newColumn.id]: newColumn
+        }
+      }
+      setData(newData)
     },
-    []
+    [data]
   )
   return (
     <DragDropContext onDragEnd={onDragEnd}>
