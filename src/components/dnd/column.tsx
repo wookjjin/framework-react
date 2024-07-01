@@ -1,4 +1,4 @@
-import { Droppable } from '@hello-pangea/dnd'
+import { Droppable, Draggable } from '@hello-pangea/dnd'
 import styled from 'styled-components'
 
 import Task from '~/components/dnd/task'
@@ -25,27 +25,31 @@ const TaskList = styled.div<{ $isDraggingOver: boolean }>`
   min-height: 100px; */
 `
 
-const Column = ({column, tasks}: IColumnProps) => {
+const Column = ({ column, tasks, index }: IColumnProps) => {
   return (
-    <Container>
-      <Title>{column.title}</Title>
-      <Droppable droppableId={column.id}>
-        {(provided, snapshot) => (
-          <TaskList
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            $isDraggingOver={snapshot.isDraggingOver}
-          >
-            <>
-              {tasks.map((task, idx) => (
-                <Task key={task.id} index={idx} task={task} />
-              ))}
-              {provided.placeholder}
-            </>
-          </TaskList>
-        )}
-      </Droppable>
-    </Container>
+    <Draggable draggableId={column.id} index={index}>
+      {(provided) => (
+        <Container ref={provided.innerRef} {...provided.draggableProps}>
+          <Title {...provided.dragHandleProps}>{column.title}</Title>
+          <Droppable droppableId={column.id} type="task">
+            {(provided, snapshot) => (
+              <TaskList
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                $isDraggingOver={snapshot.isDraggingOver}
+              >
+                <>
+                  {tasks.map((task, idx) => (
+                    <Task key={task.id} task={task} index={idx} />
+                  ))}
+                  {provided.placeholder}
+                </>
+              </TaskList>
+            )}
+          </Droppable>
+        </Container>
+      )}
+    </Draggable>
   )
 }
 

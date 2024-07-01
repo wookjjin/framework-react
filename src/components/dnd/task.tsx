@@ -1,4 +1,5 @@
 import { Draggable } from '@hello-pangea/dnd'
+import React from 'react'
 import styled from 'styled-components'
 
 import type { ITaskProps } from '~/types/dnd'
@@ -28,4 +29,4 @@ const Task = ({ task, index }: ITaskProps) => {
   )
 }
 
-export default Task
+export default React.memo(Task)
