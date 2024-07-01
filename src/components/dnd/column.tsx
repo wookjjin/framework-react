@@ -28,7 +28,7 @@ const TaskList = styled.div<{ $isDraggingOver: boolean }>`
 const Column = ({ column, tasks, index }: IColumnProps) => {
   return (
     <Draggable draggableId={column.id} index={index}>
-      {(provided) => (
+      {provided => (
         <Container ref={provided.innerRef} {...provided.draggableProps}>
           <Title {...provided.dragHandleProps}>{column.title}</Title>
           <Droppable droppableId={column.id} type="task">

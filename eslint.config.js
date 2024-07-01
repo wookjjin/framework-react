@@ -6,13 +6,15 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import functional from 'eslint-plugin-functional'
 import esImport from 'eslint-plugin-import'
 import globals from 'globals'
+import prettier from 'eslint-plugin-prettier'
+import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default [
   {
     files: ['**/*.{ts,tsx}'],
     plugins: {
       functional,
-      'import': esImport,
+      import: esImport,
       '@typescript-eslint': tsEslint,
     },
     languageOptions: {
@@ -35,46 +37,77 @@ export default [
       '@typescript-eslint/no-unused-vars': 'error',
       'no-undef': 'error',
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
-      'quotes': ['error', 'single'],
-      'indent': ['error', 2],
-      'semi': ['error', 'never'],
+      quotes: ['error', 'single'],
+      indent: ['error', 2],
+      semi: ['error', 'never'],
       'import/order': [
         'error',
         {
-          'groups': ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'object', 'type', 'unknown'],
-          'pathGroups': [
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling'],
+            'index',
+            'object',
+            'type',
+            'unknown',
+          ],
+          pathGroups: [
             {
-              'pattern': 'react',
-              'group': 'builtin',
-              'position': 'before'
+              pattern: 'react',
+              group: 'builtin',
+              position: 'before',
             },
             {
-              'pattern': 'react-router-dom',
-              'group': 'builtin',
-              'position': 'after',
+              pattern: 'react-router-dom',
+              group: 'builtin',
+              position: 'after',
             },
             {
-              'pattern': 'styled-components',
-              'group': 'external',
-              'position': 'after',
+              pattern: 'styled-components',
+              group: 'external',
+              position: 'after',
             },
             {
-              'pattern': '@/core/**',
-              'group': 'unknown'
+              pattern: '@/core/**',
+              group: 'unknown',
             },
             {
-              'pattern': '**/*.css.ts',
-              'group': 'unknown',
-              'position': 'after'
+              pattern: '**/*.css.ts',
+              group: 'unknown',
+              position: 'after',
             },
           ],
-          'pathGroupsExcludedImportTypes': ['builtin', 'external'],
+          pathGroupsExcludedImportTypes: ['builtin', 'external'],
           'newlines-between': 'always',
-          'alphabetize': {
-            'order': 'asc',
-            'caseInsensitive': true
-          }
-        }
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+      'max-len': ['error', { code: 80, tabWidth: 2, ignoreUrls: true }],
+    },
+  },
+  /** Prettier */
+  {
+    files: ['**/*.{ts,tsx}'],
+    plugins: {
+      prettier,
+    },
+    rules: {
+      ...eslintConfigPrettier.rules,
+      'prettier/prettier': [
+        'error',
+        {
+          semi: false,
+          singleQuote: true,
+          printWidth: 80,
+          tabWidth: 2,
+          trailingComma: 'all',
+          arrowParens: 'avoid',
+        },
       ],
     },
   },

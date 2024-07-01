@@ -14,13 +14,13 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'about',
-        element: <About />
+        element: <About />,
       },
       {
         path: 'kanban',
-        element: <KanbanBoard />
-      }
-    ]
+        element: <KanbanBoard />,
+      },
+    ],
   },
 ])
 

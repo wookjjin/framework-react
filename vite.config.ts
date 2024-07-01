@@ -10,10 +10,7 @@ export default defineConfig({
     react(),
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
-      imports: [
-        'react',
-        'react-router-dom',
-      ],
+      imports: ['react', 'react-router-dom'],
       dts: 'src/auto-imports.d.ts',
     }),
   ],

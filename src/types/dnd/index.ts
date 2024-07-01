@@ -1,17 +1,17 @@
 export interface IDndData {
   tasks: {
-    [key: string]: { id: string, content: string }
+    [key: string]: { id: string; content: string }
   }
   columns: {
-    [key: string]: { id: string, title: string, taskIds: string[] }
+    [key: string]: { id: string; title: string; taskIds: string[] }
   }
   columnOrder: string[]
 }
 
 export interface IColumnProps {
   column: {
-    id: string,
-    title: string,
+    id: string
+    title: string
     taskIds: string[]
   }
   tasks: {

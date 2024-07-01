@@ -10,7 +10,7 @@ const Header = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1;  // Sidebar보다 위에 오도록 설정
+  z-index: 1; // Sidebar보다 위에 오도록 설정
 `
 
 const HeaderNav = styled.nav`
@@ -38,15 +38,15 @@ const Sidebar = styled.aside`
   top: 0;
   left: 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  margin-top: 4rem;  // Header 높이만큼 내려오도록 설정
-  z-index: 0;  // Header보다 아래에 오도록 설정
+  margin-top: 4rem; // Header 높이만큼 내려오도록 설정
+  z-index: 0; // Header보다 아래에 오도록 설정
 `
 
 const Content = styled.main`
   margin-left: 250px;
-  margin-top: 4rem;  // Header 높이만큼 내려오도록 설정
+  margin-top: 4rem; // Header 높이만큼 내려오도록 설정
   padding: 1rem;
-  height: calc(100vh - 4rem);  // Header 높이를 제외한 높이
+  height: calc(100vh - 4rem); // Header 높이를 제외한 높이
   overflow-y: auto;
 `
 
@@ -57,7 +57,6 @@ const Wrapper = styled.div`
 `
 
 const DefaultLayout = () => {
-
   return (
     <Wrapper>
       <Header>
@@ -68,7 +67,9 @@ const DefaultLayout = () => {
         </HeaderNav>
       </Header>
       <Sidebar>Sidebar</Sidebar>
-      <Content><Outlet /></Content>
+      <Content>
+        <Outlet />
+      </Content>
     </Wrapper>
   )
 }

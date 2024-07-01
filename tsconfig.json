@@ -3,22 +3,14 @@
     "baseUrl": ".",
     "module": "ESNext",
     "target": "ESNext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "strict": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "moduleResolution": "Bundler",
-    "types": [
-      "vite/client",
-    ],
+    "types": ["vite/client"],
     "paths": {
-      "~/*": [
-        "src/*",
-      ]
+      "~/*": ["src/*"]
     },
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
@@ -27,7 +19,7 @@
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
-    "isolatedModules":true
+    "isolatedModules": true
   },
   "include": [
     "**/*.ts",
@@ -38,12 +30,8 @@
     "test/**/*.tsx",
     "typed-router.d.ts",
     "./typed-router.d.ts",
-    "src/composables/xhr-source.js", "src/App.jsx",
+    "src/composables/xhr-source.js",
+    "src/App.jsx"
   ],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "eslint.config.js",
-    "vite.config.ts"
-  ]
+  "exclude": ["dist", "node_modules", "eslint.config.js", "vite.config.ts"]
 }

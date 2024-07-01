@@ -83,23 +83,17 @@ const KanbanBoard: React.FC = () => {
         setData(newData)
       }
     },
-    [data]
+    [data],
   )
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable
-        droppableId="all-columns"
-        direction="horizontal"
-        type="column"
-      >
-        {(provided) => (
+      <Droppable droppableId="all-columns" direction="horizontal" type="column">
+        {provided => (
           <Container {...provided.droppableProps} ref={provided.innerRef}>
             {data.columnOrder.map((columnId, index) => {
               const column = data.columns[columnId]
-              const tasks = column.taskIds.map(
-                (taskId) => data.tasks[taskId]
-              )
+              const tasks = column.taskIds.map(taskId => data.tasks[taskId])
               return (
                 <Column
                   column={column}

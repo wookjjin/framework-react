@@ -11,14 +11,13 @@ const Container = styled.div`
   height: 100vh;
 `
 
-const ErrorPage:React.FC =() =>{
+const ErrorPage: React.FC = () => {
   const error = useRouteError()
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 401) {
       // ...
-    }
-    else if (error.status === 404) {
+    } else if (error.status === 404) {
       // ...
     }
 
@@ -44,7 +43,7 @@ const ErrorPage:React.FC =() =>{
       </Container>
     )
   } else {
-    return (<></>)
+    return <></>
   }
 }
 
