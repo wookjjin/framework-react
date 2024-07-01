@@ -87,6 +87,7 @@ export default [
           },
         },
       ],
+      'import/no-duplicates': 'error',
       'max-len': ['error', { code: 80, tabWidth: 2, ignoreUrls: true }],
     },
   },
