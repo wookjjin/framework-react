@@ -6,8 +6,6 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import functional from 'eslint-plugin-functional'
 import esImport from 'eslint-plugin-import'
 import globals from 'globals'
-import prettier from 'eslint-plugin-prettier'
-import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default [
   {
@@ -88,28 +86,7 @@ export default [
         },
       ],
       'import/no-duplicates': 'error',
-      'max-len': ['error', { code: 80, tabWidth: 2, ignoreUrls: true }],
-    },
-  },
-  /** Prettier */
-  {
-    files: ['**/*.{ts,tsx}'],
-    plugins: {
-      prettier,
-    },
-    rules: {
-      ...eslintConfigPrettier.rules,
-      'prettier/prettier': [
-        'error',
-        {
-          semi: false,
-          singleQuote: true,
-          printWidth: 80,
-          tabWidth: 2,
-          trailingComma: 'all',
-          arrowParens: 'avoid',
-        },
-      ],
+      'max-len': ['error', { code: 120, tabWidth: 2, ignoreUrls: true }],
     },
   },
   /** React */
@@ -119,8 +96,21 @@ export default [
       react,
     },
     rules: {
-      'react/prop-types': 'off',
+      ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+      'react/prop-types': 'off',
+      "react/jsx-wrap-multilines": [
+        "error",
+        {
+          "declaration": "parens-new-line",
+          "assignment": "parens-new-line",
+          "return": "parens-new-line",
+          "arrow": "parens-new-line",
+          "condition": "ignore",
+          "logical": "ignore",
+          "prop": "ignore"
+        }
+      ]
     },
     settings: {
       react: {
