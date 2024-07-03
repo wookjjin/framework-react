@@ -35,6 +35,7 @@ export default [
       '@typescript-eslint/no-unused-vars': 'error',
       'no-undef': 'error',
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
+      'max-len': ['error', { code: 120, tabWidth: 2, ignoreUrls: true }],
       quotes: ['error', 'single'],
       indent: ['error', 2],
       semi: ['error', 'never'],
@@ -86,7 +87,6 @@ export default [
         },
       ],
       'import/no-duplicates': 'error',
-      'max-len': ['error', { code: 120, tabWidth: 2, ignoreUrls: true }],
     },
   },
   /** React */
@@ -99,18 +99,6 @@ export default [
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       'react/prop-types': 'off',
-      "react/jsx-wrap-multilines": [
-        "error",
-        {
-          "declaration": "parens-new-line",
-          "assignment": "parens-new-line",
-          "return": "parens-new-line",
-          "arrow": "parens-new-line",
-          "condition": "ignore",
-          "logical": "ignore",
-          "prop": "ignore"
-        }
-      ]
     },
     settings: {
       react: {
