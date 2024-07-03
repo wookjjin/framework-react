@@ -6,5 +6,6 @@
   "proseWrap": "never",
   "trailingComma": "all",
   "htmlWhitespaceSensitivity": "css",
-  "jsxSingleQuote": true
+  "jsxSingleQuote": true,
+  "endOfLine": "lf"
 }

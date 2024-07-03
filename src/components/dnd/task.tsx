@@ -10,7 +10,7 @@ const Container = styled.div<{ $isDragging?: boolean }>`
   border: 1px solid lightgrey;
   border-radius: 2px;
 
-  background-color: ${props => (props.$isDragging ? 'lightgreen' : 'white')};
+  background-color: ${(props) => (props.$isDragging ? 'lightgreen' : 'white')};
 `
 
 const Task = ({ task, index }: ITaskProps) => {

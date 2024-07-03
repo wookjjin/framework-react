@@ -6,8 +6,9 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import functional from 'eslint-plugin-functional'
 import esImport from 'eslint-plugin-import'
 import globals from 'globals'
+import prettier from 'prettier'
 import eslintConfigPrettier from 'eslint-config-prettier'
-import jsxA11y from 'eslint-plugin-jsx-a11y';
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 
 export default [
   {
@@ -16,6 +17,7 @@ export default [
       functional,
       import: esImport,
       '@typescript-eslint': tsEslint,
+      prettier
     },
     languageOptions: {
       parser: tsParser,
@@ -40,23 +42,14 @@ export default [
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
       'max-len': ['error', { code: 120, tabWidth: 2, ignoreUrls: true }],
       quotes: ['error', 'single'],
-      indent: ['error', 2, { 'SwitchCase': 1}],
+      indent: ['error', 2, { SwitchCase: 1 }],
       semi: ['error', 'never'],
       'import/prefer-default-export': 'off',
       'import/no-unresolved': 'off',
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index',
-            'object',
-            'type',
-            'unknown',
-          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'object', 'type', 'unknown'],
           pathGroups: [
             {
               pattern: 'react',
@@ -104,9 +97,9 @@ export default [
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       'react/display-name': 'off',
-      'react/function-component-definition': ['warn', { 'namedComponents': 'arrow-function' }],
+      'react/function-component-definition': ['warn', { namedComponents: 'arrow-function' }],
       'react/jsx-one-expression-per-line': 'off',
-      'react/jsx-filename-extension': ['error', { 'extensions': ['.js', '.jsx', '.ts', '.tsx'] }],
+      'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
       'react/jsx-props-no-spreading': 'off',
       'react/require-default-props': 'off',
       'react/jsx-wrap-multilines': 'off',
@@ -116,11 +109,11 @@ export default [
       'jsx-a11y/label-has-associated-control': [
         'error',
         {
-          'labelComponents': ['label'],
-          'labelAttributes': ['htmlFor'],
-          'controlComponents': ['input']
-        }
-      ]
+          labelComponents: ['label'],
+          labelAttributes: ['htmlFor'],
+          controlComponents: ['input'],
+        },
+      ],
     },
     settings: {
       react: {

@@ -21,7 +21,7 @@ const Title = styled.h3`
 const TaskList = styled.div<{ $isDraggingOver: boolean }>`
   padding: 8px;
 
-  background-color: ${props => (props.$isDraggingOver ? 'skyblue' : 'white')};
+  background-color: ${(props) => (props.$isDraggingOver ? 'skyblue' : 'white')};
 
   transition: background-color 0.2s ease;
   /* flex-grow: 1;
@@ -31,16 +31,12 @@ const TaskList = styled.div<{ $isDraggingOver: boolean }>`
 const Column = ({ column, tasks, index }: IColumnProps) => {
   return (
     <Draggable draggableId={column.id} index={index}>
-      {provided => (
+      {(provided) => (
         <Container ref={provided.innerRef} {...provided.draggableProps}>
           <Title {...provided.dragHandleProps}>{column.title}</Title>
-          <Droppable droppableId={column.id} type="task">
+          <Droppable droppableId={column.id} type='task'>
             {(provided, snapshot) => (
-              <TaskList
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                $isDraggingOver={snapshot.isDraggingOver}
-              >
+              <TaskList {...provided.droppableProps} ref={provided.innerRef} $isDraggingOver={snapshot.isDraggingOver}>
                 <>
                   {tasks.map((task, idx) => (
                     <Task key={task.id} task={task} index={idx} />

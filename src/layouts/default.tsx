@@ -43,12 +43,11 @@ const Sidebar = styled.aside<{ $isOpen: boolean }>`
   left: 0;
   z-index: 0;
 
-  width: ${props => (props.$isOpen ? '250px' : '0')};
+  width: ${(props) => (props.$isOpen ? '250px' : '0')};
   height: 100vh;
   margin-top: 4rem;
-  padding: ${props => (props.$isOpen ? '1rem' : '0')};
-  box-shadow: ${props =>
-    props.$isOpen ? '2px 0 5px rgba(0, 0, 0, 0.1)' : 'none'};
+  padding: ${(props) => (props.$isOpen ? '1rem' : '0')};
+  box-shadow: ${(props) => (props.$isOpen ? '2px 0 5px rgba(0, 0, 0, 0.1)' : 'none')};
 
   background-color: #f4f4f4;
 
@@ -58,7 +57,7 @@ const Sidebar = styled.aside<{ $isOpen: boolean }>`
 const Content = styled.main<{ $isOpen: boolean }>`
   height: calc(100vh - 4rem);
   margin-top: 4rem;
-  margin-left: ${props => (props.$isOpen ? '250px' : '0')};
+  margin-left: ${(props) => (props.$isOpen ? '250px' : '0')};
   padding: 1rem;
 
   overflow-y: auto;
@@ -71,8 +70,7 @@ const Wrapper = styled.div`
   height: 100vh;
 `
 
-const Button = styled.button`
-`
+const Button = styled.button``
 
 const DefaultLayout = () => {
   const [isSidebarOpen, setIsOpen] = useState(false)
@@ -81,12 +79,12 @@ const DefaultLayout = () => {
     <Wrapper>
       <Header>
         <Button onClick={() => setIsOpen(!isSidebarOpen)}>
-          <Dehaze fontSize="large" />
+          <Dehaze fontSize='large' />
         </Button>
         <HeaderNav>
-          <StyledLink to="/">Home</StyledLink>
-          <StyledLink to="/about">About</StyledLink>
-          <StyledLink to="/kanban">Kanban</StyledLink>
+          <StyledLink to='/'>Home</StyledLink>
+          <StyledLink to='/about'>About</StyledLink>
+          <StyledLink to='/kanban'>Kanban</StyledLink>
         </HeaderNav>
       </Header>
       <Sidebar $isOpen={isSidebarOpen}>Sidebar</Sidebar>

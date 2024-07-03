@@ -16,11 +16,7 @@ const KanbanBoard: React.FC = () => {
     (result: DropResult) => {
       const { destination, source, draggableId, type } = result
       if (!destination) return
-      if (
-        destination.droppableId === source.droppableId &&
-        source.index === destination.index
-      )
-        return
+      if (destination.droppableId === source.droppableId && source.index === destination.index) return
 
       if (type === 'column') {
         const newColumnOrder = Array.from(data.columnOrder)
@@ -88,20 +84,13 @@ const KanbanBoard: React.FC = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="all-columns" direction="horizontal" type="column">
-        {provided => (
+      <Droppable droppableId='all-columns' direction='horizontal' type='column'>
+        {(provided) => (
           <Container {...provided.droppableProps} ref={provided.innerRef}>
             {data.columnOrder.map((columnId, index) => {
               const column = data.columns[columnId]
-              const tasks = column.taskIds.map(taskId => data.tasks[taskId])
-              return (
-                <Column
-                  column={column}
-                  tasks={tasks}
-                  key={column.id}
-                  index={index}
-                />
-              )
+              const tasks = column.taskIds.map((taskId) => data.tasks[taskId])
+              return <Column column={column} tasks={tasks} key={column.id} index={index} />
             })}
             {provided.placeholder}
           </Container>

@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "stylelint-styled-components-order"
-  ],
+  "extends": ["stylelint-styled-components-order"],
 
-  "rules": {
-  }
+  "rules": {}
 }
-
