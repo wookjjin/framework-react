@@ -4,7 +4,6 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import DefaultLayout from '~/layouts/default'
 import About from '~/pages/about'
 import ErrorPage from '~/pages/error-page'
-import KanbanBoard from '~/pages/kanban-board'
 
 const router = createBrowserRouter([
   {
@@ -17,8 +16,7 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: 'kanban',
-        element: <KanbanBoard />,
+        path: 'example/:category',
       },
     ],
   },

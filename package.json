@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix",
-    "write": "prettier --write ."
+    "write": "prettier --write .",
+    "devtools": "react-devtools"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

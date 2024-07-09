@@ -1,4 +1,4 @@
-import { Dehaze } from '@mui/icons-material'
+import { Dehaze, AccountCircleOutlined ,EditNotificationsOutlined  } from '@mui/icons-material'
 import { useState } from 'react'
 import { Outlet, Link as RouterLink } from 'react-router-dom'
 import styled
@@ -11,10 +11,11 @@ const Wrapper = styled.div`
 
   height: 100vh;
 `
-
+/** Header Area */
 const Header = styled.header`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
@@ -30,29 +31,39 @@ const Header = styled.header`
   text-align: center;
 `
 
-const HeaderNav = styled.nav`
+const IconWrapper = styled.div`
   display: flex;
-  flex-grow: 1;
   align-items: center;
-  justify-content: space-around;
-`
+  justify-content: flex-start;
 
-const StyledLink = styled(RouterLink)`
-  color: #fff;
-  font-size: 1.2rem;
 
-  text-decoration: none;
-
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
   &:hover {
-    text-decoration: underline;
+    color: lightblue;
   }
 `
 
+const HeaderLogo = styled.div`
+  width: 200px;
+  color: #fff;
+`
+
+const UtilWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  width: 400px;
+
+  gap:1em;
+`
+
+/** Sidebar Area */
 const Sidebar = styled.aside<{ $isOpen: boolean }>`
   overflow: hidden;
   z-index: 0;
 
-  width: ${(props) => (props.$isOpen ? '250px' : '0')};
+  width: ${(props) => (props.$isOpen ? '350px' : '0')};
   height: 100%;
   box-shadow: ${(props) => (props.$isOpen ? '2px 0 5px rgba(0, 0, 0, 0.1)' : 'none')};
 
@@ -65,6 +76,27 @@ const SidebarContainer = styled.div`
   padding: 1rem;
 `
 
+const Navigation = styled.nav`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  gap: 1rem;
+`
+
+const StyledLink = styled(RouterLink)`
+  color: #000;
+  font-weight: 500;
+  font-size: 1.2rem;
+
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+/** Content Area */
 const ContentWrapper = styled.div`
   display: flex;
 
@@ -107,43 +139,28 @@ const Content = styled.main<{ $isOpen: boolean }>`
 //   }
 // `
 
-const HeaderUtil = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-
-  background: rgba(255,255,255,0.2);
-
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  &:hover {
-    scale: 1.2;
-  }
-`
-
 const DefaultLayout = () => {
   const [isSidebarOpen, setIsOpen] = useState(true)
   return (
     <Wrapper>
       <Header>
-        <HeaderUtil onClick={() => setIsOpen(!isSidebarOpen)}>
-          <Dehaze fontSize='large' />
-        </HeaderUtil>
-        <HeaderNav>
-          <StyledLink to='/'>Home</StyledLink>
-          <StyledLink to='/about'>About</StyledLink>
-          <StyledLink to='/kanban'>Kanban</StyledLink>
-        </HeaderNav>
+        <IconWrapper onClick={() => setIsOpen(!isSidebarOpen)}>
+          <Dehaze sx={{fontSize: '30px'}} />
+        </IconWrapper>
+        <HeaderLogo>Logo</HeaderLogo>
+        <UtilWrapper>
+          <EditNotificationsOutlined sx={{ fontSize: '30px', cursor: 'pointer' }} />
+          <AccountCircleOutlined sx={{ fontSize: '30px', cursor: 'pointer' }} />
+        </UtilWrapper>
       </Header>
       <ContentWrapper>
         <Sidebar $isOpen={isSidebarOpen}>
           <SidebarContainer>
-            Sidebar
+            <Navigation>
+              <StyledLink to='/'>Home</StyledLink>
+              <StyledLink to='/about'>About</StyledLink>
+              <StyledLink to='/example'>Example</StyledLink>
+            </Navigation>
           </SidebarContainer>
         </Sidebar>
         <Content $isOpen={isSidebarOpen}>
