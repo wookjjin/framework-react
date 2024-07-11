@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import Column from '~/components/dnd/column'
 import { IDndData } from '~/types/dnd'
-import { initialData } from '~/types/dnd/constans'
+import { initialData } from '~/types/dnd/constant'
 
 const Container = styled.div`
   display: flex;

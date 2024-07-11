@@ -1,9 +1,13 @@
 import { Dehaze, AccountCircleOutlined ,EditNotificationsOutlined  } from '@mui/icons-material'
-import { useState } from 'react'
-import { Outlet, Link as RouterLink } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
 import styled
   // { keyframes }
   from 'styled-components'
+
+import TreeSection from '~/components/tree'
+import { TreeSectionProps } from '~/types/tree'
+import { menuData } from '~/types/tree/constant'
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,9 +55,8 @@ const HeaderLogo = styled.div`
 
 const UtilWrapper = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
-
-  width: 400px;
 
   gap:1em;
 `
@@ -74,26 +77,6 @@ const Sidebar = styled.aside<{ $isOpen: boolean }>`
 
 const SidebarContainer = styled.div`
   padding: 1rem;
-`
-
-const Navigation = styled.nav`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-
-  gap: 1rem;
-`
-
-const StyledLink = styled(RouterLink)`
-  color: #000;
-  font-weight: 500;
-  font-size: 1.2rem;
-
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `
 
 /** Content Area */
@@ -139,28 +122,70 @@ const Content = styled.main<{ $isOpen: boolean }>`
 //   }
 // `
 
+const SignButton = styled.button<{ $color: string }>`
+  height: 36px;
+  min-width: 85px;
+  padding: 5px;
+  border: 2px solid ${(props) => (props.$color)};
+  border-radius: 19px;
+
+  background-color: transparent;
+
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+
+  cursor: pointer;
+
+  /* font-family: 'Pretendard-Bold'; */
+`
+
+const LoginInfo = () => {
+  const [isLogined, setIsLogined] = useState(false)
+  return (<>
+    {isLogined ? <UtilWrapper>
+          사용자
+      <EditNotificationsOutlined sx={{ fontSize: '30px', cursor: 'pointer' }} />
+      <AccountCircleOutlined sx={{ fontSize: '30px', cursor: 'pointer' }} />
+    </UtilWrapper>
+      :
+      <UtilWrapper>
+        <SignButton as='a' $color={'#fff'}>
+          로그인
+        </SignButton>
+      </UtilWrapper>
+    }
+  </>)
+}
+
+const Menu = () => {
+  const [menuList, setMenuList] = useState<TreeSectionProps[]>([])
+
+  useEffect(() => {
+    setMenuList(menuData)
+  }, [])
+
+  return (
+    <TreeSection treeProps={menuList} />
+  )
+}
+
 const DefaultLayout = () => {
   const [isSidebarOpen, setIsOpen] = useState(true)
+
   return (
     <Wrapper>
       <Header>
         <IconWrapper onClick={() => setIsOpen(!isSidebarOpen)}>
-          <Dehaze sx={{fontSize: '30px'}} />
+          <Dehaze sx={{ fontSize: '30px' }} />
         </IconWrapper>
         <HeaderLogo>Logo</HeaderLogo>
-        <UtilWrapper>
-          <EditNotificationsOutlined sx={{ fontSize: '30px', cursor: 'pointer' }} />
-          <AccountCircleOutlined sx={{ fontSize: '30px', cursor: 'pointer' }} />
-        </UtilWrapper>
+        <LoginInfo />
       </Header>
       <ContentWrapper>
         <Sidebar $isOpen={isSidebarOpen}>
           <SidebarContainer>
-            <Navigation>
-              <StyledLink to='/'>Home</StyledLink>
-              <StyledLink to='/about'>About</StyledLink>
-              <StyledLink to='/example'>Example</StyledLink>
-            </Navigation>
+            <Menu />
           </SidebarContainer>
         </Sidebar>
         <Content $isOpen={isSidebarOpen}>

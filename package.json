@@ -17,11 +17,14 @@
     "@hello-pangea/dnd": "^16.6.0",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
+    "@react-three/fiber": "^8.16.8",
+    "@types/three": "^0.166.0",
     "globals": "^15.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.0",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "three": "^0.166.1"
   },
   "devDependencies": {
     "@eslint-react/eslint-plugin": "^1.5.20",
