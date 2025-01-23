@@ -1,14 +1,18 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
+import TodoItem from './TodoItem'
+import DatePicker from 'react-datepicker'
+import { useState } from 'react'
+import "react-datepicker/dist/react-datepicker.css"
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 0.5em;
 `
 
 const Input = styled.input`
   padding: 0.5em;
-  margin: 0.5em;
   background-color: antiquewhite;
   color: #BF4F74;
   border: none;
@@ -27,14 +31,23 @@ const Button = styled.button`
 `
 
 const Todo = () => {
+	const [startDate, setStartDate] = useState(new Date() as Date | null)
 	return (
 		<>
-			<Wrapper>
-				<Input />
-				<Button >
-					Add
-				</Button>
-			</Wrapper>
+			<div>
+				<Wrapper>
+					<Input />
+					<Button >
+						Add
+					</Button>
+					<DatePicker
+						showIcon
+						selected={startDate}
+						onChange={(date) => setStartDate(date)}
+					/>
+				</Wrapper>
+				<TodoItem />
+			</div>
 		</>
 	)
 }
