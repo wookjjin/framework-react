@@ -5,7 +5,8 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import react from 'eslint-plugin-react'
-import noRelativeImportPaths from 'no-relative-import-paths'
+import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths'
+import prettier from 'prettier'
 
 export default tseslint.config(
 	{ ignores: ['dist'] },
@@ -19,8 +20,9 @@ export default tseslint.config(
 			react,
 			'jsx-a11y': jsxA11y,
 			'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      'no-relative-import-paths': noRelativeImportPaths
+			'react-refresh': reactRefresh,
+			'no-relative-import-paths': noRelativeImportPaths,
+			'prettier': prettier
 		},
 		languageOptions: {
 			globals: globals.browser,
@@ -31,24 +33,24 @@ export default tseslint.config(
 			},
 		},
 		rules: {
-      ...reactHooks.configs.recommended.rules,
-      "prefer-destructuring": [
-        "error",
-        {
-          "VariableDeclarator": {
-            "array": false,
-            "object": true
-          },
-          "AssignmentExpression": {
-            "array": false,
-            "object": false
-          }
-        }
-      ],
-      'no-relative-import-paths/no-relative-import-paths': [
-        'warn',
-        { 'allowSameFolder': true, 'rootDir': 'src', 'prefix': '~' }
-      ],
+			...reactHooks.configs.recommended.rules,
+			"prefer-destructuring": [
+				"error",
+				{
+					"VariableDeclarator": {
+						"array": false,
+						"object": true
+					},
+					"AssignmentExpression": {
+						"array": false,
+						"object": false
+					}
+				}
+			],
+			'no-relative-import-paths/no-relative-import-paths': [
+				'warn',
+				{ 'allowSameFolder': true, 'rootDir': 'src', 'prefix': '~' }
+			],
 			'react-refresh/only-export-components': [
 				'warn',
 				{ allowConstantExport: true },
@@ -63,7 +65,6 @@ export default tseslint.config(
 			],
 			'react/jsx-indent': [2, 'tab'],
 			'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
-			'react/jsx-fragments': ['error', 'element'],
 			'linebreak-style': ['error', 'windows'],
 			'react/jsx-wrap-multilines': 0,
 			'react/jsx-indent-props': [2, 'tab'],

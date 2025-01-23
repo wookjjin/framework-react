@@ -1,14 +1,18 @@
 import styled from 'styled-components'
 import TodoItem from './TodoItem'
-import DatePicker from 'react-datepicker'
 import { useState } from 'react'
-import "react-datepicker/dist/react-datepicker.css"
+
+interface Todo {
+  id: number;
+  text: string;
+}
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5em;
+  margin-bottom: 1em;
 `
 
 const Input = styled.input`
@@ -31,22 +35,43 @@ const Button = styled.button`
 `
 
 const Todo = () => {
-	const [startDate, setStartDate] = useState(new Date() as Date | null)
+	const [todoList, setTodoList] = useState<Todo[]>([])
+	const [inputValue, setInputValue] = useState('')
+  
+	const handleAddTodo = () => {
+		if (inputValue.trim() === '') 
+			return
+
+		const newTodo: Todo = {
+			id: Date.now(),
+			text: inputValue
+		}
+    
+		setTodoList([...todoList, newTodo])
+		setInputValue('')
+	}
+  
+	const handleDeleteTodo = (id: number) => {
+		setTodoList(todoList.filter((todo) => todo.id !== id))
+	}
+
 	return (
 		<>
 			<div>
 				<Wrapper>
-					<Input />
-					<Button >
+					<Input type='text' value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+					<Button onClick={handleAddTodo}>
 						Add
 					</Button>
-					<DatePicker
-						showIcon
-						selected={startDate}
-						onChange={(date) => setStartDate(date)}
-					/>
 				</Wrapper>
-				<TodoItem />
+				{todoList.length ? (
+					todoList.map((todo) => (
+						<TodoItem key={todo.id} id={todo.id} text={todo.text} onDelete={handleDeleteTodo} />
+					))
+				) : (
+					<p>No todos yet.</p>
+				)
+				}
 			</div>
 		</>
 	)
