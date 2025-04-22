@@ -16,6 +16,7 @@
     "@fontsource/roboto": "^5.2.5",
     "@mui/material": "^7.0.2",
     "@reduxjs/toolkit": "^2.7.0",
+    "@supabase/supabase-js": "^2.49.4",
     "dayjs": "^1.11.13",
     "fullcalendar": "^6.1.17",
     "fullcalendar-scheduler": "^6.1.17",
