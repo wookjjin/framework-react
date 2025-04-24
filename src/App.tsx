@@ -20,7 +20,7 @@ const AuthenticatedContent = () => {
 
   return (
     <div>
-      <p className='mb-4'>
+      <p>
         환영합니다, {user.email}님!
       </p>
       <UserManagement />

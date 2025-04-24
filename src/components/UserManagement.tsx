@@ -68,14 +68,14 @@ const UserManagement: React.FC = () => {
   if (error) return <div>에러 발생: {JSON.stringify(error)}</div>;
 
   return (
-    <div className='container mx-auto p-4'>
-      <h1 className='text-2xl font-bold mb-4'>사용자 관리</h1>
+    <div>
+      <h1>사용자 관리</h1>
 
-      <div className='mb-8 p-4 border rounded'>
-        <h2 className='text-xl mb-2'>사용자 추가</h2>
-        <form onSubmit={handleAddUser} className='space-y-4'>
+      <div>
+        <h2>사용자 추가</h2>
+        <form onSubmit={handleAddUser}>
           <div>
-            <label className='block mb-1'>이름:</label>
+            <label>이름:</label>
             <TextField
               type='text'
               name='name'
@@ -86,7 +86,7 @@ const UserManagement: React.FC = () => {
             />
           </div>
           <div>
-            <label className='block mb-1'>이메일:</label>
+            <label>이메일:</label>
             <TextField
               type='email'
               name='email'
@@ -103,17 +103,17 @@ const UserManagement: React.FC = () => {
       </div>
 
       <div>
-        <h2 className='text-xl mb-2'>사용자 목록</h2>
+        <h2>사용자 목록</h2>
         {users && users.length > 0 ? (
-          <ul className='space-y-2'>
+          <ul>
             {users.map(user => (
-              <li key={user.id} className='p-3 border rounded'>
-                <div className='flex justify-between items-center'>
+              <li key={user.id}>
+                <div>
                   <div>
-                    <div className='font-bold'>{user.name}</div>
-                    <div className='text-gray-600'>{user.email}</div>
+                    <div>{user.name}</div>
+                    <div>{user.email}</div>
                   </div>
-                  <div className='space-x-2'>
+                  <div>
                     <Button
                       onClick={() => handleUpdateName(user)}
                       disabled={isUpdating}

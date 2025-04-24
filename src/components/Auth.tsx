@@ -49,12 +49,12 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className='p-4 border rounded shadow-sm'>
-      <h2 className='text-xl mb-4'>{isLogin ? '로그인' : '회원가입'}</h2>
+    <div>
+      <h2>{isLogin ? '로그인' : '회원가입'}</h2>
 
-      <form onSubmit={handleAuth} className='space-y-4'>
+      <form onSubmit={handleAuth} >
         <div>
-          <label className='block mb-1'>이메일:</label>
+          <label>이메일:</label>
           <TextField
             id='standard-basic'
             value={email}
@@ -65,7 +65,7 @@ const Auth: React.FC = () => {
         </div>
 
         <div>
-          <label className='block mb-1'>비밀번호:</label>
+          <label>비밀번호:</label>
           <TextField
             id='standard-basic'
             value={password}
@@ -75,7 +75,7 @@ const Auth: React.FC = () => {
           />
         </div>
 
-        <div className='flex justify-between'>
+        <div>
           <Button
             type='submit'
             variant='outlined'
@@ -102,7 +102,7 @@ const Auth: React.FC = () => {
       </Button>
 
       {message && (
-        <div className={`mt-4 p-2 rounded ${message.includes('오류') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+        <div>
           {message}
         </div>
       )}
