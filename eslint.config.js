@@ -5,6 +5,8 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import react from 'eslint-plugin-react'
 import importPlugin from 'eslint-plugin-import'
+import prettierPlugin from 'eslint-plugin-prettier'
+import prettierConfig from 'eslint-config-prettier'
 
 export default tseslint.config(
   { ignores: ['dist', 'node_modules'] },
@@ -12,6 +14,7 @@ export default tseslint.config(
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
+      prettierConfig,
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -33,6 +36,7 @@ export default tseslint.config(
       'react': react,
       'import': importPlugin,
       '@typescript-eslint': tseslint.plugin,
+      'prettier': prettierPlugin,
     },
     rules: {
       // 기존 룰 유지
@@ -42,8 +46,19 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
 
-      // 문자열 따옴표 규칙 - 싱글 쿼터 사용
-      '@/quotes': ['error', 'single', { 'avoidEscape': true }],
+      // Prettier 룰 추가
+      'prettier/prettier': ['error', {
+        singleQuote: true,
+        semi: false,
+        tabWidth: 2,
+        trailingComma: 'es5',
+        printWidth: 140,
+        endOfLine: 'auto',
+        jsxSingleQuote: true,
+      }],
+
+      // 문자열 따옴표 규칙 - 싱글 쿼터 사용 (오류 수정)
+      'quotes': ['error', 'single', { 'avoidEscape': true }],
       
       // JSX에서도 싱글 쿼터 사용
       'jsx-quotes': ['error', 'prefer-single'],
@@ -85,6 +100,10 @@ export default tseslint.config(
       'react/jsx-no-undef': 'error',
       'react/jsx-key': 'error',
       'react/jsx-no-duplicate-props': 'error',
+      'react/jsx-uses-react': 'error',
+      'react/jsx-uses-vars': 'error',
+      'react/no-unknown-property': 'error',
+      'react/self-closing-comp': 'warn',
 
       // Import 관련 룰
       'import/order': ['warn', {
@@ -99,11 +118,20 @@ export default tseslint.config(
         'alphabetize': { order: 'asc', caseInsensitive: true }
       }],
       'import/no-cycle': 'warn',
+      'import/first': 'error',
+      'import/no-duplicates': 'error',
+      'import/no-unresolved': 'off', // TypeScript가 처리
+      'import/newline-after-import': 'error',
     },
     settings: {
       react: {
         version: 'detect',
       },
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx']
+        }
+      }
     },
   },
 )

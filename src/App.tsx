@@ -2,10 +2,10 @@
 import './App.css'
 import { Provider } from 'react-redux';
 
-import { store } from './app/store';
 import Auth from './components/Auth';
 import UserManagement from './components/UserManagement';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { store } from './store/store';
 
 const AuthenticatedContent = () => {
   const { user, loading } = useAuth();
