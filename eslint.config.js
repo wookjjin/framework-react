@@ -11,11 +11,7 @@ import prettierConfig from 'eslint-config-prettier'
 export default tseslint.config(
   { ignores: ['dist', 'node_modules'] },
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      prettierConfig,
-    ],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -33,62 +29,66 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      'react': react,
-      'import': importPlugin,
+      react: react,
+      import: importPlugin,
       '@typescript-eslint': tseslint.plugin,
-      'prettier': prettierPlugin,
+      prettier: prettierPlugin,
     },
     rules: {
       // 기존 룰 유지
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 
       // Prettier 룰 추가
-      'prettier/prettier': ['error', {
-        singleQuote: true,
-        semi: false,
-        tabWidth: 2,
-        trailingComma: 'es5',
-        printWidth: 140,
-        endOfLine: 'auto',
-        jsxSingleQuote: true,
-      }],
+      'prettier/prettier': [
+        'error',
+        {
+          singleQuote: true,
+          semi: false,
+          tabWidth: 2,
+          trailingComma: 'es5',
+          endOfLine: 'auto',
+          jsxSingleQuote: true,
+          bracketSpacing: true,
+          arrowParens: 'avoid',
+        },
+      ],
 
       // 문자열 따옴표 규칙 - 싱글 쿼터 사용 (오류 수정)
-      'quotes': ['error', 'single', { 'avoidEscape': true }],
-      
+      quotes: ['error', 'single', { avoidEscape: true }],
+
       // JSX에서도 싱글 쿼터 사용
       'jsx-quotes': ['error', 'prefer-single'],
 
-      // 빈 줄 규칙 
+      // 빈 줄 규칙
       'padding-line-between-statements': [
         'error',
         {
           blankLine: 'always',
           prev: '*',
           next: 'return',
-        }
+        },
       ],
 
       // 빈 줄 수 제한
-      'no-multiple-empty-lines': ['error', { 'max': 1 }],
+      'no-multiple-empty-lines': ['error', { max: 1 }],
 
       // 기본 코드 스타일
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-const': 'warn',
       'no-var': 'error',
-      'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
+      eqeqeq: ['error', 'always', { null: 'ignore' }],
       'no-duplicate-imports': 'error',
       'no-trailing-spaces': 'error',
 
       // TypeScript 관련 룰
-      '@typescript-eslint/no-unused-vars': ['error', {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_'
-      }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/ban-ts-comment': 'warn',
@@ -106,17 +106,14 @@ export default tseslint.config(
       'react/self-closing-comp': 'warn',
 
       // Import 관련 룰
-      'import/order': ['warn', {
-        'groups': [
-          'builtin',
-          'external',
-          'internal',
-          ['parent', 'sibling'],
-          'index'
-        ],
-        'newlines-between': 'always',
-        'alphabetize': { order: 'asc', caseInsensitive: true }
-      }],
+      'import/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
       'import/no-cycle': 'warn',
       'import/first': 'error',
       'import/no-duplicates': 'error',
@@ -129,9 +126,9 @@ export default tseslint.config(
       },
       'import/resolver': {
         node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx']
-        }
-      }
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
+      },
     },
-  },
+  }
 )

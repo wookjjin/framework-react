@@ -115,13 +115,15 @@ const UserManagement: React.FC = () => {
                     <Button
                       onClick={() => handleUpdateName(user)}
                       disabled={isUpdating}
-                      variant='contained'>
+                      variant='contained'
+                    >
                       이름 수정
                     </Button>
                     <Button
                       onClick={() => handleDeleteUser(user.id)}
                       disabled={isDeleting}
-                      variant='outlined'>
+                      variant='outlined'
+                    >
                       삭제
                     </Button>
                   </div>
