@@ -1,8 +1,9 @@
+import React from 'react'
 import { Outlet } from 'react-router'
 
-import { LayoutHeader } from '~/components/layouts/LayoutHeader'
+import LayoutHeader from '~/components/layouts/LayoutHeader'
 
-export function Default() {
+const Default: React.FC = () => {
   return (
     <>
       <LayoutHeader />

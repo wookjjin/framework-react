@@ -76,25 +76,17 @@ const Auth: React.FC = () => {
         </div>
 
         <div>
-          <Button
-            type='submit'
-            variant='outlined'
-            disabled={loading}>
+          <Button type='submit' variant='outlined' disabled={loading}>
             {loading ? '처리 중...' : isLogin ? '로그인' : '회원가입'}
           </Button>
 
-          <Button
-            type='button'
-            onClick={() => setIsLogin(!isLogin)}
-            variant='contained'>
+          <Button type='button' onClick={() => setIsLogin(!isLogin)} variant='contained'>
             {isLogin ? '계정 만들기' : '이미 계정이 있습니다'}
           </Button>
         </div>
       </form>
 
-      <Button
-        variant='contained'
-        onClick={handleSignOut}>
+      <Button variant='contained' onClick={handleSignOut}>
         로그아웃
       </Button>
 

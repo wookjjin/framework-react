@@ -19,8 +19,6 @@ const LoginCard: React.FC = () => {
     event.preventDefault()
 
     try {
-      console.log('aaaaaaaa')
-
       await signInWithEmail(formData.email, formData.password)
     } catch (error) {
       console.error(error)
@@ -29,7 +27,7 @@ const LoginCard: React.FC = () => {
 
   return (
     <Card sx={{ width: 360, p: 3, boxShadow: 3, borderRadius: 2 }}>
-      <CardContent>
+      <CardContent sx={{ textAlign: 'center' }}>
         <Typography variant='h5' gutterBottom>
           로그인
         </Typography>
