@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
 
-import DefaultLayout from '~/components/layouts/Default'
-import LayoutEmpty from '~/components/layouts/LayoutEmpty'
+import DefaultLayout from '~/components/layout/Default'
+import LayoutEmpty from '~/components/layout/LayoutEmpty'
 import About from '~/pages/about'
 import Home from '~/pages/home'
 import LoginPage from '~/pages/login'

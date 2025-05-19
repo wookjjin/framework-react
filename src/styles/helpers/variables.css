@@ -1,0 +1,69 @@
+/* ===== Layout ===== */
+:root {
+  --layout-scrollbar-size: 12px;
+  --layout-header-height: 50px;
+  --layout-padding: 15px;
+}
+
+:root {
+  --z-index-header: 999999;
+  --z-index-popup: 9999999;
+}
+
+/* ===== Color ===== */
+:root {
+  --color-primary-900: #293846;
+  --color-primary-800: #2f4050;
+  --color-primary-700: #374d60;
+  --color-primary-600: #52708b;
+
+  --color-secondary-900: #0e192a;
+
+  --color-gray-900: #0b0d0e;
+  --color-gray-800: #333333;
+  --color-gray-750: #4c4c4c;
+  --color-gray-700: #676a6c;
+  --color-gray-600: #9ea3a7;
+  --color-gray-550: #adadad;
+  --color-gray-500: #cccccc;
+  --color-gray-400: #d5d5d5;
+  --color-gray-300: #dfdfdf;
+  --color-gray-200: #eae6ea;
+  --color-gray-150: #e6e6e6;
+  --color-gray-100: #eeeeee;
+
+  --color-red-900: #ac2925;
+  --color-red-800: #c9302c;
+  --color-red-700: #d43f3a;
+  --color-red-600: #d9534f;
+  --color-red-500: #ff0000;
+
+  --color-black: #000000;
+  --color-white: #ffffff;
+}
+
+/* ===== Border Radius ===== */
+:root {
+  --radius-full: 100%;
+  --radius-lg: 15px;
+  --radius-md: 4px;
+  --radius-sm: 2px;
+}
+
+/* ===== Form Height ===== */
+:root {
+  --form-height-lg: 50px;
+  --form-height-md: 32px;
+  --form-height-sm: 30px;
+  --form-height-xs: 21px;
+}
+
+/* ===== Etc ===== */
+:root {
+  --transition: all 0.2s ease-in-out;
+
+  --font-family: 'Pretendard', 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-nerr: 'Merriweather VariableFont', 'Pretendard', 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+}

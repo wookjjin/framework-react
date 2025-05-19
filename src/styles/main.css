@@ -1,0 +1,8 @@
+@import "./base/tailwind.css";
+
+@layer base {
+  @import "./base/reset.css";
+  @import "./base/font.css";
+}
+
+@import "./_variables.css";
