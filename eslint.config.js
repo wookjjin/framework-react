@@ -11,7 +11,11 @@ import prettierConfig from 'eslint-config-prettier'
 export default tseslint.config(
   { ignores: ['dist', 'node_modules'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      prettierConfig,
+    ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -37,26 +41,26 @@ export default tseslint.config(
     rules: {
       // 기존 룰 유지
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
 
       // Prettier 룰 추가
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-          semi: false,
-          tabWidth: 2,
-          trailingComma: 'es5',
-          endOfLine: 'auto',
-          jsxSingleQuote: true,
-          bracketSpacing: true,
-          arrowParens: 'avoid',
-          parser: 'flow',
-        },
-        {
-          usePrettierrc: false,
-        },
-      ],
+      // 'prettier/prettier': [
+      //   'error',
+      //   {
+      //     singleQuote: true,
+      //     semi: false,
+      //     tabWidth: 2,
+      //     trailingComma: 'es5',
+      //     endOfLine: 'auto',
+      //     jsxSingleQuote: true,
+      //   },
+      //   {
+      //     usePrettierrc: false,
+      //   },
+      // ],
 
       // 문자열 따옴표 규칙 - 싱글 쿼터 사용 (오류 수정)
       quotes: ['error', 'single', { avoidEscape: true }],
@@ -113,7 +117,13 @@ export default tseslint.config(
       'import/order': [
         'warn',
         {
-          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling'],
+            'index',
+          ],
           'newlines-between': 'always',
           alphabetize: { order: 'asc', caseInsensitive: true },
         },

@@ -7,7 +7,13 @@ const LoginPage: React.FC = () => {
   return (
     <>
       <CssBaseline />
-      <Box display='flex' justifyContent='center' alignItems='center' minHeight='100vh' bgcolor='#F5F7FA'>
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        minHeight='100vh'
+        bgcolor='#F5F7FA'
+      >
         <LoginCard />
       </Box>
     </>

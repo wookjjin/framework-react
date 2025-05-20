@@ -1,9 +1,11 @@
 import React from 'react'
 
+import Calendar from '~/components/calendar/Fullcalendar'
+
 const Home: React.FC = () => {
   return (
     <>
-      <h1>Home</h1>
+      <Calendar />
     </>
   )
 }

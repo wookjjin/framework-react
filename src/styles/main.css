@@ -5,4 +5,4 @@
   @import "./base/font.css";
 }
 
-@import "./_variables.css";
+@import "./helpers/variables.css";
