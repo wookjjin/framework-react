@@ -1,15 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
-import counterReducer from '~/features/counter/counterSlice'
 import { api } from '~/services/api'
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
-    counter: counterReducer,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(api.middleware),
 })
 
 // 리스너 설정

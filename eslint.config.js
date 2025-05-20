@@ -51,6 +51,10 @@ export default tseslint.config(
           jsxSingleQuote: true,
           bracketSpacing: true,
           arrowParens: 'avoid',
+          parser: 'flow',
+        },
+        {
+          usePrettierrc: false,
         },
       ],
 

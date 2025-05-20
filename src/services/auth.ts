@@ -39,9 +39,17 @@ export const getCurrentUser = async () => {
 
 // 세션 확인
 export const getSession = async () => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  try {
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.getSession()
+    if (error) throw error
 
-  return session
+    return session
+  } catch (error) {
+    console.error('Error getting session:', error)
+
+    return null
+  }
 }

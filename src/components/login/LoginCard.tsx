@@ -1,14 +1,15 @@
 import { Card, CardContent, TextField, Button, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import { signInWithEmail } from '~/services/auth'
 
 const LoginCard: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', password: '' })
+  const navigate = useNavigate()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-
     setFormData(prev => ({
       ...prev,
       [name]: value,
@@ -20,6 +21,8 @@ const LoginCard: React.FC = () => {
 
     try {
       await signInWithEmail(formData.email, formData.password)
+
+      navigate('/', { replace: true })
     } catch (error) {
       console.error(error)
     }
