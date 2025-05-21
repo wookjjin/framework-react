@@ -66,8 +66,8 @@ const Calendar = () => {
   }
 
   return (
-    <div className='flex flex-col md:flex-row h-screen bg-gray-50'>
-      <div className={`${sidebarOpen ? 'w-full md:w-80' : 'w-0'} transition-all duration-300 overflow-hidden md:overflow-visible bg-white shadow-lg z-10`}>
+    <div className='flex flex-col md:flex-row h-[calc(100vh-65px)] bg-gray-50'>
+      <div className={`${sidebarOpen ? 'w-full md:w-80' : 'w-0'} transition-all duration-300 bg-white shadow-lg z-10 flex-shrink-0`}>
         <Sidebar
           weekendsVisible={weekendsVisible}
           handleWeekendsToggle={handleWeekendsToggle}
@@ -76,49 +76,51 @@ const Calendar = () => {
           onToggle={toggleSidebar}
         />
       </div>
-      <div className='flex-1 relative p-4 overflow-auto'>
-        <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay',
-          }}
-          initialView='dayGridMonth'
-          editable={true}
-          selectable={true}
-          selectMirror={true}
-          dayMaxEvents={3}
-          weekends={weekendsVisible}
-          initialEvents={INITIAL_EVENTS}
-          select={handleDateSelect}
-          eventContent={renderEventContent}
-          eventClick={handleEventClick}
-          eventsSet={handleEvents}
-          height='auto'
-          locale='ko'
-          buttonText={{
-            today: '오늘',
-            month: '월별',
-            week: '주별',
-            day: '일별',
-          }}
-          dayHeaderFormat={{ weekday: 'short' }}
-          titleFormat={{ year: 'numeric', month: 'long' }}
-          eventDisplay='block'
-          eventTimeFormat={{
-            hour: '2-digit',
-            minute: '2-digit',
-            meridiem: false,
-            hour12: false,
-          }}
-          views={{
-            dayGridMonth: {
-              dayMaxEventRows: 3,
-              titleFormat: { year: 'numeric', month: 'long' },
-            },
-          }}
-        />
+      <div className='flex-1 p-4 overflow-auto'>
+        <div className='h-full'>
+          <FullCalendar
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay',
+            }}
+            initialView='dayGridMonth'
+            editable={true}
+            selectable={true}
+            selectMirror={true}
+            dayMaxEvents={3}
+            weekends={weekendsVisible}
+            initialEvents={INITIAL_EVENTS}
+            select={handleDateSelect}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            eventsSet={handleEvents}
+            height='100%'
+            locale='ko'
+            buttonText={{
+              today: '오늘',
+              month: '월별',
+              week: '주별',
+              day: '일별',
+            }}
+            dayHeaderFormat={{ weekday: 'short' }}
+            titleFormat={{ year: 'numeric', month: 'long' }}
+            eventDisplay='block'
+            eventTimeFormat={{
+              hour: '2-digit',
+              minute: '2-digit',
+              meridiem: false,
+              hour12: false,
+            }}
+            views={{
+              dayGridMonth: {
+                dayMaxEventRows: 3,
+                titleFormat: { year: 'numeric', month: 'long' },
+              },
+            }}
+          />
+        </div>
       </div>
     </div>
   )
@@ -143,8 +145,8 @@ const Sidebar = ({
   onToggle,
 }: SidebarProps & { isOpen: boolean; onToggle: () => void }) => {
   return (
-    <div className={`h-full flex flex-col ${isOpen ? 'w-80' : 'w-0'} transition-all duration-300`}>
-      <div className='p-4 border-b border-gray-200'>
+    <div className={`h-full flex flex-col ${isOpen ? 'w-80' : 'w-0'}`}>
+      <div className='p-4 border-b border-gray-200 flex-shrink-0'>
         <h1 className='text-xl font-bold text-gray-800 mb-4'>캘린더</h1>
         <div className='flex items-center justify-between'>
           <label className='flex items-center cursor-pointer'>
