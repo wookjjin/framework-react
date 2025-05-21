@@ -17,14 +17,21 @@ interface SidebarProps {
   weekendsVisible: boolean
   handleWeekendsToggle: () => void
   currentEvents: EventApi[]
+  isOpen: boolean
+  onToggle: () => void
 }
 
 const Calendar = () => {
   const [weekendsVisible, setWeekendsVisible] = useState(true)
   const [currentEvents, setCurrentEvents] = useState<EventApi[]>([])
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
   const handleWeekendsToggle = () => {
     setWeekendsVisible(!weekendsVisible)
+  }
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen)
   }
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
@@ -59,13 +66,17 @@ const Calendar = () => {
   }
 
   return (
-    <div className='demo-app'>
-      <Sidebar
-        weekendsVisible={weekendsVisible}
-        handleWeekendsToggle={handleWeekendsToggle}
-        currentEvents={currentEvents}
-      />
-      <div className='demo-app-main'>
+    <div className='flex flex-col md:flex-row h-screen bg-gray-50'>
+      <div className={`${sidebarOpen ? 'w-full md:w-80' : 'w-0'} transition-all duration-300 overflow-hidden md:overflow-visible bg-white shadow-lg z-10`}>
+        <Sidebar
+          weekendsVisible={weekendsVisible}
+          handleWeekendsToggle={handleWeekendsToggle}
+          currentEvents={currentEvents}
+          isOpen={sidebarOpen}
+          onToggle={toggleSidebar}
+        />
+      </div>
+      <div className='flex-1 relative p-4 overflow-auto'>
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
@@ -77,13 +88,36 @@ const Calendar = () => {
           editable={true}
           selectable={true}
           selectMirror={true}
-          dayMaxEvents={true}
+          dayMaxEvents={3}
           weekends={weekendsVisible}
           initialEvents={INITIAL_EVENTS}
           select={handleDateSelect}
           eventContent={renderEventContent}
           eventClick={handleEventClick}
           eventsSet={handleEvents}
+          height='auto'
+          locale='ko'
+          buttonText={{
+            today: '오늘',
+            month: '월별',
+            week: '주별',
+            day: '일별',
+          }}
+          dayHeaderFormat={{ weekday: 'short' }}
+          titleFormat={{ year: 'numeric', month: 'long' }}
+          eventDisplay='block'
+          eventTimeFormat={{
+            hour: '2-digit',
+            minute: '2-digit',
+            meridiem: false,
+            hour12: false,
+          }}
+          views={{
+            dayGridMonth: {
+              dayMaxEventRows: 3,
+              titleFormat: { year: 'numeric', month: 'long' },
+            },
+          }}
         />
       </div>
     </div>
@@ -92,10 +126,12 @@ const Calendar = () => {
 
 const renderEventContent = (eventInfo: EventContentArg) => {
   return (
-    <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
-    </>
+    <div className='p-1 text-xs overflow-hidden'>
+      <div className='font-medium truncate'>{eventInfo.event.title}</div>
+      {eventInfo.timeText && (
+        <div className='text-xs opacity-80'>{eventInfo.timeText}</div>
+      )}
+    </div>
   )
 }
 
@@ -103,34 +139,46 @@ const Sidebar = ({
   weekendsVisible,
   handleWeekendsToggle,
   currentEvents,
-}: SidebarProps) => {
+  isOpen,
+  onToggle,
+}: SidebarProps & { isOpen: boolean; onToggle: () => void }) => {
   return (
-    <div className='demo-app-sidebar'>
-      <div className='demo-app-sidebar-section'>
-        <h2>Instructions</h2>
-        <ul>
-          <li>Select dates and you will be prompted to create a new event</li>
-          <li>Drag, drop, and resize events</li>
-          <li>Click an event to delete it</li>
-        </ul>
+    <div className={`h-full flex flex-col ${isOpen ? 'w-80' : 'w-0'} transition-all duration-300`}>
+      <div className='p-4 border-b border-gray-200'>
+        <h1 className='text-xl font-bold text-gray-800 mb-4'>캘린더</h1>
+        <div className='flex items-center justify-between'>
+          <label className='flex items-center cursor-pointer'>
+            <div className='relative'>
+              <input
+                type='checkbox'
+                className='sr-only'
+                checked={weekendsVisible}
+                onChange={handleWeekendsToggle}
+              />
+              <div className={`block w-12 h-6 rounded-full ${weekendsVisible ? 'bg-blue-500' : 'bg-gray-300'}`} />
+              <div className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform ${weekendsVisible ? 'transform translate-x-6' : ''}`} />
+            </div>
+            <span className='ml-2 text-sm font-medium text-gray-700'>주말 표시</span>
+          </label>
+          <button
+            onClick={onToggle}
+            className='md:hidden p-1 text-gray-500 hover:text-gray-700'
+          >
+            ✕
+          </button>
+        </div>
       </div>
-      <div className='demo-app-sidebar-section'>
-        <label>
-          <input
-            type='checkbox'
-            checked={weekendsVisible}
-            onChange={handleWeekendsToggle}
-          />
-          toggle weekends
-        </label>
-      </div>
-      <div className='demo-app-sidebar-section'>
-        <h2>All Events ({currentEvents.length})</h2>
-        <ul>
-          {currentEvents.map((event) => (
-            <SidebarEvent key={event.id} event={event} />
-          ))}
-        </ul>
+      <div className='flex-1 overflow-y-auto p-4'>
+        <h2 className='text-lg font-semibold text-gray-700 mb-3'>이벤트 목록 ({currentEvents.length})</h2>
+        {currentEvents.length === 0 ? (
+          <p className='text-sm text-gray-500 text-center py-4'>등록된 이벤트가 없습니다</p>
+        ) : (
+          <ul className='space-y-2'>
+            {currentEvents.map((event) => (
+              <SidebarEvent key={event.id} event={event} />
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   )
@@ -138,17 +186,37 @@ const Sidebar = ({
 
 const SidebarEvent = ({ event }: { event: EventApi }) => {
   return (
-    <li key={event.id}>
-      <b>
-        {event.start
-          ? formatDate(event.start, {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })
-          : ''}
-      </b>
-      <i>{event.title}</i>
+    <li key={event.id} className='bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100'>
+      <div className='flex items-start'>
+        <div className='bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full mr-2'>
+          {event.start
+            ? formatDate(event.start, {
+              month: 'short',
+              day: 'numeric',
+            })
+            : ''}
+        </div>
+        <div className='flex-1'>
+          <h3 className='text-sm font-medium text-gray-900 line-clamp-1'>{event.title}</h3>
+          {event.start && (
+            <p className='text-xs text-gray-500'>
+              {formatDate(event.start, {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+              {event.end && (
+                <>
+                  {' - '}
+                  {formatDate(event.end, {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </>
+              )}
+            </p>
+          )}
+        </div>
+      </div>
     </li>
   )
 }
