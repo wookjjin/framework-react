@@ -26,6 +26,7 @@ const Calendar = () => {
   const [weekendsVisible, setWeekendsVisible] = useState(true)
   const [currentEvents, setCurrentEvents] = useState<EventApi[]>([])
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [isViewChanging, setIsViewChanging] = useState(false)
 
   const handleWeekendsToggle = () => {
     setWeekendsVisible(!weekendsVisible)
@@ -119,24 +120,46 @@ const Calendar = () => {
                 dayMaxEventRows: 3,
                 titleFormat: { year: 'numeric', month: 'long' },
               },
+              timeGridWeek: {
+                titleFormat: {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                },
+              },
+              timeGridDay: {
+                titleFormat: {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  weekday: 'long'
+                },
+              },
             }}
             viewDidMount={(info) => {
-              const viewEl = info.el;
-              viewEl.classList.add(styles.fadeIn);
+              const viewEl = info.el
+              viewEl.classList.add(styles.fadeIn)
+              setIsViewChanging(false)
+            }}
+            viewWillUnmount={() => {
+              setIsViewChanging(true)
             }}
             datesSet={(_dateInfo) => {
-              const viewHarness = document.querySelector('.fc-view-harness') as HTMLElement;
-              if (viewHarness) {
-                viewHarness.classList.remove(styles.fadeIn);
-                viewHarness.style.opacity = '0';
+              // 뷰 변경 중이 아닐 때만 fade-in 효과 적용 (prev/next 버튼 클릭 시에만)
+              if (!isViewChanging) {
+                const viewHarness = document.querySelector('.fc-view-harness') as HTMLElement
+                if (viewHarness) {
+                  viewHarness.classList.remove(styles.fadeIn)
+                  viewHarness.style.opacity = '0'
 
-                // 강제 reflow
-                void viewHarness.offsetHeight;
+                  // 강제 reflow
+                  void viewHarness.offsetHeight
 
-                setTimeout(() => {
-                  viewHarness.classList.add(styles.fadeIn);
-                  viewHarness.style.opacity = '';
-                }, 50);
+                  setTimeout(() => {
+                    viewHarness.classList.add(styles.fadeIn)
+                    viewHarness.style.opacity = ''
+                  }, 50)
+                }
               }
             }}
           />
@@ -163,7 +186,7 @@ const Sidebar = ({
   currentEvents,
   isOpen,
   onToggle,
-}: SidebarProps & { isOpen: boolean; onToggle: () => void }) => {
+}: SidebarProps & { isOpen: boolean, onToggle: () => void }) => {
   return (
     <div className={`h-full flex flex-col ${isOpen ? 'w-80' : 'w-0'}`}>
       <div className='p-4 border-b border-gray-200 flex-shrink-0'>
