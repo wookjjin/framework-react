@@ -1,3 +1,4 @@
+// Calendar.tsx - 업데이트된 버전
 import {
   formatDate,
   EventApi,
@@ -9,8 +10,9 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
+import { useSidebar } from '~/contexts/sidebar-context'
 import styles from '~/styles/components/calendar.module.css'
 import { INITIAL_EVENTS, createEventId } from '~/utils/event'
 
@@ -19,21 +21,17 @@ interface SidebarProps {
   handleWeekendsToggle: () => void
   currentEvents: EventApi[]
   isOpen: boolean
-  onToggle: () => void
 }
 
 const Calendar = () => {
   const [weekendsVisible, setWeekendsVisible] = useState(true)
   const [currentEvents, setCurrentEvents] = useState<EventApi[]>([])
-  const [sidebarOpen, setSidebarOpen] = useState(true)
   const [isViewChanging, setIsViewChanging] = useState(false)
+  const { sidebarOpen } = useSidebar()
+  const calendarRef = useRef<FullCalendar>(null)
 
   const handleWeekendsToggle = () => {
     setWeekendsVisible(!weekendsVisible)
-  }
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen)
   }
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
@@ -67,20 +65,30 @@ const Calendar = () => {
     setCurrentEvents(events)
   }
 
+  useEffect(() => {
+    if (calendarRef.current) {
+      const timer = setTimeout(() => {
+        calendarRef.current?.getApi().updateSize()
+      }, 300)
+
+      return () => clearTimeout(timer)
+    }
+  }, [sidebarOpen])
+
   return (
     <div className='flex flex-col md:flex-row h-[calc(100vh-65px)] bg-gray-50'>
-      <div className={`${sidebarOpen ? 'w-full md:w-80' : 'w-0'} transition-all duration-300 bg-white shadow-lg z-10 flex-shrink-0`}>
+      <div className={`${sidebarOpen ? 'w-full md:w-80' : 'w-0'} transition-all duration-300 bg-white shadow-lg z-10 flex-shrink-0 overflow-hidden`}>
         <Sidebar
           weekendsVisible={weekendsVisible}
           handleWeekendsToggle={handleWeekendsToggle}
           currentEvents={currentEvents}
           isOpen={sidebarOpen}
-          onToggle={toggleSidebar}
         />
       </div>
       <div className='flex-1 p-4 overflow-auto'>
         <div className={`h-full ${styles.calendarContainer}`}>
           <FullCalendar
+            ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{
               left: 'prev,next today',
@@ -185,10 +193,15 @@ const Sidebar = ({
   handleWeekendsToggle,
   currentEvents,
   isOpen,
-  onToggle,
-}: SidebarProps & { isOpen: boolean, onToggle: () => void }) => {
+}: SidebarProps) => {
+  const { toggleSidebar } = useSidebar()
+
+  if (!isOpen) {
+    return null
+  }
+
   return (
-    <div className={`h-full flex flex-col ${isOpen ? 'w-80' : 'w-0'}`}>
+    <div className='h-full flex flex-col w-80'>
       <div className='p-4 border-b border-gray-200 flex-shrink-0'>
         <h1 className='text-xl font-bold text-gray-800 mb-4'>캘린더</h1>
         <div className='flex items-center justify-between'>
@@ -206,7 +219,7 @@ const Sidebar = ({
             <span className='ml-2 text-sm font-medium text-gray-700'>주말 표시</span>
           </label>
           <button
-            onClick={onToggle}
+            onClick={toggleSidebar}
             className='md:hidden p-1 text-gray-500 hover:text-gray-700'
           >
             ✕
