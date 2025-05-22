@@ -1,0 +1,58 @@
+/* Calendar Container */
+.calendarContainer {
+  position: relative;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation: fadeIn 0.4s ease-in-out !important;
+}
+
+/* Button Transitions */
+.calendarContainer :global(.fc-button-group .fc-button) {
+  transition: all 0.2s ease-in-out !important;
+}
+
+.calendarContainer :global(.fc-button-group .fc-button:hover) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendarContainer :global(.fc-button-group .fc-button:active) {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+/* Event Transitions */
+.calendarContainer :global(.fc .fc-daygrid-event) {
+  transition: all 0.2s ease-in-out;
+}
+
+.calendarContainer :global(.fc .fc-daygrid-event:hover) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.calendarContainer :global(.fc .fc-event) {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Title Transitions */
+.calendarContainer :global(.fc .fc-toolbar-title) {
+  transition: all 0.4s ease-in-out;
+}
+
+/* Grid Transitions */
+.calendarContainer :global(.fc-theme-standard .fc-scrollgrid) {
+  transition: opacity 0.3s ease-in-out;
+}

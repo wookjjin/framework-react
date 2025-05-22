@@ -11,6 +11,7 @@ import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useState } from 'react'
 
+import styles from '~/styles/components/calendar.module.css'
 import { INITIAL_EVENTS, createEventId } from '~/utils/event'
 
 interface SidebarProps {
@@ -77,7 +78,7 @@ const Calendar = () => {
         />
       </div>
       <div className='flex-1 p-4 overflow-auto'>
-        <div className='h-full'>
+        <div className={`h-full ${styles.calendarContainer}`}>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={{
@@ -118,6 +119,25 @@ const Calendar = () => {
                 dayMaxEventRows: 3,
                 titleFormat: { year: 'numeric', month: 'long' },
               },
+            }}
+            viewDidMount={(info) => {
+              const viewEl = info.el;
+              viewEl.classList.add(styles.fadeIn);
+            }}
+            datesSet={(_dateInfo) => {
+              const viewHarness = document.querySelector('.fc-view-harness') as HTMLElement;
+              if (viewHarness) {
+                viewHarness.classList.remove(styles.fadeIn);
+                viewHarness.style.opacity = '0';
+
+                // 강제 reflow
+                void viewHarness.offsetHeight;
+
+                setTimeout(() => {
+                  viewHarness.classList.add(styles.fadeIn);
+                  viewHarness.style.opacity = '';
+                }, 50);
+              }
             }}
           />
         </div>
