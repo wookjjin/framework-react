@@ -1,4 +1,3 @@
-// Calendar.tsx - 업데이트된 버전
 import {
   formatDate,
   EventApi,
@@ -10,7 +9,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 import { useSidebar } from '~/contexts/sidebar-context'
 import styles from '~/styles/components/calendar.module.css'
@@ -65,14 +64,62 @@ const Calendar = () => {
     setCurrentEvents(events)
   }
 
-  useEffect(() => {
-    if (calendarRef.current) {
-      const timer = setTimeout(() => {
-        calendarRef.current?.getApi().updateSize()
-      }, 300)
+  // throttle 함수
+  const throttle = useCallback((func: Function, limit: number) => {
+    let inThrottle: boolean
 
-      return () => clearTimeout(timer)
+    return function (this: any, ...args: any[]) {
+      if (!inThrottle) {
+        func.apply(this, args)
+        inThrottle = true
+        setTimeout(() => inThrottle = false, limit)
+      }
     }
+  }, [])
+
+  // throttled updateSize 함수
+  const throttledUpdateSize = useCallback(
+    throttle(() => {
+      if (calendarRef.current) {
+        requestAnimationFrame(() => {
+          calendarRef.current?.getApi().updateSize()
+        })
+      }
+    }, 100), // 100ms마다 최대 한 번만 실행
+    []
+  )
+
+  // ResizeObserver를 사용한 부드러운 크기 조정
+  useEffect(() => {
+    const calendarContainer = document.querySelector('.calendar-container')
+    if (!calendarContainer) return
+
+    const resizeObserver = new ResizeObserver(() => {
+      throttledUpdateSize()
+    })
+
+    resizeObserver.observe(calendarContainer)
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [throttledUpdateSize])
+
+  // 사이드바 토글 시 즉시 한 번, 완료 후 한 번 더
+  useEffect(() => {
+    // 즉시 실행
+    requestAnimationFrame(() => {
+      calendarRef.current?.getApi().updateSize()
+    })
+
+    // 애니메이션 완료 후 정리
+    const timer = setTimeout(() => {
+      requestAnimationFrame(() => {
+        calendarRef.current?.getApi().updateSize()
+      })
+    }, 320)
+
+    return () => clearTimeout(timer)
   }, [sidebarOpen])
 
   return (
@@ -86,7 +133,13 @@ const Calendar = () => {
         />
       </div>
       <div className='flex-1 p-4 overflow-auto'>
-        <div className={`h-full ${styles.calendarContainer}`}>
+        <div
+          className={`h-full ${styles.calendarContainer}`}
+          style={{
+            transition: 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
+            willChange: 'width'
+          }}
+        >
           <FullCalendar
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
