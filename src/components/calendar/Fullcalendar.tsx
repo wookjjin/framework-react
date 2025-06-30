@@ -11,6 +11,8 @@ import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useState, useRef, useEffect, useCallback } from 'react'
 
+import BasicModal from '../modal/BasicModal'
+
 import { useSidebar } from '~/contexts/sidebar-context'
 import styles from '~/styles/components/calendar.module.css'
 import { INITIAL_EVENTS, createEventId } from '~/utils/event'
@@ -34,12 +36,20 @@ const Calendar = () => {
   }
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
-    const title = prompt('Please enter a new title for your event')
-    const calendarApi = selectInfo.view.calendar
+    setNewEventInfo({
+      title: '',
+      selectInfo
+    })
+    setIsAddEventModalOpen(true)
+  }
 
-    calendarApi.unselect() // clear date selection
-
-    if (title) {
+  const handleAddEventConfirm = () => {
+    if (newEventInfo.title && newEventInfo.selectInfo) {
+      const { selectInfo, title } = newEventInfo
+      const calendarApi = selectInfo.view.calendar
+      
+      calendarApi.unselect() // clear date selection
+      
       calendarApi.addEvent({
         id: createEventId(),
         title,
@@ -47,16 +57,31 @@ const Calendar = () => {
         end: selectInfo.endStr,
         allDay: selectInfo.allDay,
       })
+      
+      setIsAddEventModalOpen(false)
+      setNewEventInfo({ title: '', selectInfo: null })
     }
   }
 
+  const [selectedEvent, setSelectedEvent] = useState<EventClickArg | null>(null)
+  const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false)
+  const [newEventInfo, setNewEventInfo] = useState<{
+    title: string
+    selectInfo: DateSelectArg | null
+  }>({ title: '', selectInfo: null })
+
+  const handleEventTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewEventInfo(prev => ({ ...prev, title: e.target.value }))
+  }
+
   const handleEventClick = (clickInfo: EventClickArg) => {
-    if (
-      confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
-      clickInfo.event.remove()
+    setSelectedEvent(clickInfo)
+  }
+
+  const handleDeleteConfirm = () => {
+    if (selectedEvent) {
+      selectedEvent.event.remove()
+      setSelectedEvent(null)
     }
   }
 
@@ -226,6 +251,46 @@ const Calendar = () => {
           />
         </div>
       </div>
+      
+      {/* 이벤트 삭제 확인 모달 */}
+      <BasicModal
+        open={!!selectedEvent}
+        onClose={() => setSelectedEvent(null)}
+        title="이벤트 삭제"
+        onConfirm={handleDeleteConfirm}
+        confirmText="삭제"
+        cancelText="취소"
+      >
+        <p>'{selectedEvent?.event.title}' 일정을 정말 삭제하시겠습니까?</p>
+      </BasicModal>
+
+      {/* 이벤트 추가 모달 */}
+      <BasicModal
+        open={isAddEventModalOpen}
+        onClose={() => {
+          setIsAddEventModalOpen(false)
+          setNewEventInfo({ title: '', selectInfo: null })
+        }}
+        title="새 일정 추가"
+        onConfirm={handleAddEventConfirm}
+        confirmText="추가"
+        cancelText="취소"
+      >
+        <div className="mb-4">
+          <label htmlFor="eventTitle" className="block text-sm font-medium text-gray-700 mb-1">
+            일정 제목
+          </label>
+          <input
+            type="text"
+            id="eventTitle"
+            value={newEventInfo.title}
+            onChange={handleEventTitleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            placeholder="일정 제목을 입력하세요"
+            autoFocus
+          />
+        </div>
+      </BasicModal>
     </div>
   )
 }
